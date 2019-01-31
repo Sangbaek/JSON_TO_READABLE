@@ -1,0 +1,74 @@
+{
+         "attempts": "2479",
+         "auger_active": "111",
+         "auger_depend": "462",
+         "auger_finishing": "3",
+         "create_ts": "1548815074000",
+         "current_ts": "1548880811000",
+         "dispatched": "576",
+         "jobs": "64076",
+         "phase": "2",
+         "succeeded": "1843",
+         "tags": [
+            {
+               "task": "decode"
+            },
+            {
+               "run": [
+                  {
+                     "test": "123"
+                  },
+                  "003432",
+                  "003434",
+                  "003435",
+                  "003442",
+                  "003465",
+                  "003480",
+                  "003482",
+                  "003485",
+                  "003488",
+                  "003490",
+                  "003506",
+                  "003512",
+                  "003513",
+                  "003529",
+                  "003530",
+                  "003532",
+                  "003533",
+                  "003534",
+                  "003535",
+                  "003538",
+                  "003540",
+                  "003544",
+                  "003545",
+                  "003547",
+                  "004021"
+               ]
+            },
+            {
+               "coatjava": "/group/clas12/packages/coatjava-6b.0.0"
+            },
+            {
+               "run_group": "rga"
+            },
+            {
+               "workDir": "/volatile/clas12/rga/production/decoding/6b.0.0"
+            },
+            {
+               "mode": [
+                  "decode",
+                  "merge",
+                  "delete",
+                  "move"
+               ]
+            },
+            {
+               "outDir": "/cache/mss/clas12/rg-a/production/decoded/6b.0.0"
+            }
+         ],
+         "undispatched": "61657",
+         "update_ts": "1548880522000",
+         "workflow_id": "93294",
+         "workflow_name": "rga-decode1_R3432x25_x1300",
+         "workflow_user": "clas12"
+}
