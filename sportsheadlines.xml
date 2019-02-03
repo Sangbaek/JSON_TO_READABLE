@@ -1,0 +1,20 @@
+<rss version="2.0">
+            <channel>
+            <title>ABC News: Sports</title>
+            <link>http://abcnews.go.com/Sports/</link>
+            <description></description>
+            <image>
+              <title>ABC News: Sports</title>
+              <url>https://s.abcnews.com/images/site/abcnews_google_rss_logo.png</url>
+              <link>http://abcnews.go.com/Sports/</link>
+            </image>
+            <item>
+               <title><![CDATA[ NBA trade deadline: Six buyers and four sellers to watch]]></title>
+               <link><![CDATA[http://abcnews.go.com/Sports/]]></link>
+               <pubDate>Mon, 28 Jan 2019 12:36:49 -0500</pubDate>
+               <description><![CDATA[                        Because of roster flaws, every team currently projected to make the playoffs (except the         Golden State Warriors)&nbsp;could be listed in the buy category heading into the Feb. 7         NBA trade deadline. However, because the market is saturated with more buyers than sellers, finding a deal will be challenging.     Also consider that every playoff team is looking for a 6-foot-7 wing who can defend, not disrupt chemistry and make an occasional 3. Sounds easy, but those players are rarely available in trades.     &quot;Last year, there were at least 12 teams who were proposed sellers, not including Cleveland, who felt pressure to make a trade to appease         LeBron [James],&quot; one general manager told ESPN. &quot;This year, that number is half. Factor in also that the deadline is pushed up two weeks from the last Thursday in February, so more teams think that making the playoffs is obtainable.&quot;     Let's look at six sellers and four buyers, including how the news that...]]></description>
+               <category>Sports</category></item>
+            </channel>
+</rss>
+
+<!-- <media:thumbnail url="https://s.abcnews.com/images/US/abc_news_default_2000x2000_update_4x3t_384.jpg" width="384" height="288" /><media:thumbnail url="https://s.abcnews.com/images/US/abc_news_default_2000x2000_update_4x3t_144.jpg" width="144" height="108" /><media:thumbnail url="https://s.abcnews.com/images/US/abc_news_default_2000x2000_update_4x3t_384.jpg" width="384" height="288" /><media:thumbnail url="https://s.abcnews.com/images/US/abc_news_default_2000x2000_update_16x9t_240.jpg" width="240" height="135" /><media:thumbnail url="https://s.abcnews.com/images/US/abc_news_default_2000x2000_update_4x3_608.jpg" width="608" height="456" /><media:thumbnail url="https://s.abcnews.com/images/US/abc_news_default_2000x2000_update_16x9_992.jpg" width="992" height="558" /><media:keywords>1</media:keywords> -->
