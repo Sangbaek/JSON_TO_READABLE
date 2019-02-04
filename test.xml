@@ -1,49 +1,14 @@
 <?xml version="1.0" ?>
 <rss version="2.0">
-	
-	
 	<channel>
-		
-		
-		<title>JSON to XML1</title>
-		
-		
+		<title>JSON to RSS</title>
 		<link>https://clas12mon.jlab.org/</link>
-		
-		
 		<description>main description</description>
-		
-		
 		<item>
-			
-			
-			<title>Jobs64076</title>
-			
-			
-			<link>https://clas12mon.jlab.org/</link>
-			
-			
-			<description>{u'jobs': 64076, u'succeeded': 1957, u'tags': [{u'task': [u'decode']}, {u'run': [u'003432', u'003434', u'003435', u'003442', u'003465', u'003480', u'003482', u'003485', u'003488', u'003490', u'003506', u'003512', u'003513', u'003529', u'003530', u'003532', u'003533', u'003534', u'003535', u'003538', u'003540', u'003544', u'003545', u'003547', u'004021']}, {u'coatjava': [u'/group/clas12/packages/coatjava-6b.0.0']}, {u'run_group': [u'rga']}, {u'workDir': [u'/volatile/clas12/rga/production/decoding/6b.0.0']}, {u'mode': [u'decode', u'merge', u'delete', u'move']}, {u'outDir': [u'/cache/mss/clas12/rg-a/production/decoded/6b.0.0']}], u'workflow_name': u'rga-decode1_R3432x25_x1300', u'dispatched': 462, u'workflow_id': 93294, u'update_ts': 1548882307000, u'auger_depend': 461, u'attempts': 2479, u'create_ts': 1548815074000, u'current_ts': 1548882608000, u'phase': 2, u'undispatched': 61657, u'auger_active': 1, u'workflow_user': u'clas12'}</description>
-			
-			
-			<pubDate>Wed, 30 Jan 2019 21:05:07</pubDate>
-			
-		
-		</item>
-		
-	
-		<item>
-			<title>item_title</title>
-			<link>https://clas12mon.jlab.org/</link>
-			<description>item_description</description>
-		</item>
-		<item>
-			<title>Jobs1</title>
-			<link>https://clas12mon.jlab.org/</link>
-			<description>{u'jobs': 64076, u'succeeded': 1957, u'tags': [{u'task': [u'decode']}, {u'run': [u'003432', u'003434', u'003435', u'003442', u'003465', u'003480', u'003482', u'003485', u'003488', u'003490', u'003506', u'003512', u'003513', u'003529', u'003530', u'003532', u'003533', u'003534', u'003535', u'003538', u'003540', u'003544', u'003545', u'003547', u'004021']}, {u'coatjava': [u'/group/clas12/packages/coatjava-6b.0.0']}, {u'run_group': [u'rga']}, {u'workDir': [u'/volatile/clas12/rga/production/decoding/6b.0.0']}, {u'mode': [u'decode', u'merge', u'delete', u'move']}, {u'outDir': [u'/cache/mss/clas12/rg-a/production/decoded/6b.0.0']}], u'workflow_name': u'rga-decode1_R3432x25_x1300', u'dispatched': 462, u'workflow_id': 93294, u'update_ts': 1548882307000, u'auger_depend': 461, u'attempts': 2479, u'create_ts': 1548815074000, u'current_ts': 1548882608000, u'phase': 2, u'undispatched': 61657, u'auger_active': 1, u'workflow_user': u'clas12'}</description>
+			<title>Jobs 64076</title>
+			<link>https://web.mit.edu/sangbaek/Public/trial.xml</link>
+			<description>Go to Link</description>
 			<pubDate>Wed, 30 Jan 2019 21:05:07</pubDate>
 		</item>
 	</channel>
-	
-
 </rss>
