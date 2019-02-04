@@ -7,9 +7,9 @@
 <!--     <xsl:value-of select="price"/>
  -->    </div>
   <div style="margin-left:20px;margin-bottom:1em;font-size:10pt">
-    <p>
-    <span style="font-style:italic"> <xsl:value-of select="value"/> </span>
-    </p>
+  	<pre>
+  	    <span style="font-style:italic"> <xsl:value-of select="value"/> </span>
+	</pre>
   </div>
 </xsl:for-each>
 </body>
