@@ -2,100 +2,127 @@ import sys, os, subprocess, argparse, time
 import json as json
 import xml.etree.ElementTree as ET
 import xml.dom.minidom as mindom
-
+from xml.sax.saxutils import unescape
 #json and xml modules are already standard at python >2.6
 #Sangbaek Lee, Jan. 30 2019
 #keep every digit in epochtime in the stamps
 #do not use 3rd party libraries if possible e.g. pip
+#rss follows xml format with very specific tags: title, link, description(required) + some optional tags (e.g. media, pubDate, guid, url,...)
+#
+class rss_object:
+    def __init__(self, tag_main, title='Test',link='https://clas12mon.jlab.org/status/decoding/',description='description',pubDate=None,guid=None,url=None):
+        self.type = "rss_object"
+        self.tag_main= tag_main
+        self.tag_title= ET.SubElement(self.tag_main,"title")
+        self.tag_title.text = title
+        self.tag_link = ET.SubElement(self.tag_main,"link")
+        self.tag_link.text = link
+        self.tag_description = ET.SubElement(self.tag_main,"description")
+        self.tag_description.text = unescape(description)
+        if pubDate is not None:
+            self.tag_pubDate= ET.SubElement(self.tag_main,"pubDate")
+            self.tag_pubDate.text = pubDate
+        if guid is not None:
+            self.tag_guid= ET.SubElement(self.tag_main,"guid")
+            self.tag_guid.text = guid
+        if url is not None:
+            self.tag_url= ET.SubElement(self.tag_main,"url")
+            self.tag_url.text = url
 
-#jsonfilename= 'convert_this_to_XML.json'
-jsonfilename='original.json'
-jsonfile = open(jsonfilename,'r')
+#Classes for making the very first rss file.
+#Initial Setup of essential components for an RSS feed.
+#Call it rss main
+class rss_main(rss_object):
+    def __init__(self, title="Test: converting a json to an rss file",link='https://clas12mon.jlab.org/status/decoding/',description='main description',save=False,fileout='out.xml'):
+        self.type = "rss_main"
+        self.tag_namespace  = ET.Element('rss')
+        self.tag_namespace.set("version","2.0")
+        self.tag_channel = ET.SubElement(self.tag_namespace,"channel")
+        #sub objects under channel
+        rss_object.__init__(self,self.tag_channel, title,link,description)
+        if fileout is None:
+            self.fileout = fileout
+        if save is True:
+            self.savexml(fileout)
+#a simple ftn to write rss file
+    def savexml(self,fileout=None):
+        if fileout is None:
+            fileout=self.fileout
+        self.dom=mindom.parseString(ET.tostring(self.tag_namespace))
+        self.prettyprint=self.dom.toprettyxml()
+        self.prettyprint= self.prettyprint.replace("&quot;","\"")
+        outfile = open(fileout,"w")
+        outfile.write(unescape(self.prettyprint))
+        outfile.close()
 
-#Simple function to validate/read data file
+# add rss object
+    def add_item(self, title='item_title',link='https://clas12mon.jlab.org/status/decoding/',description='item_description',pubDate=None,guid=None,url=None,save=False, fileout='out.xml'):
+        self.tag_item = ET.SubElement(self.tag_channel,"item")
+        self.item = rss_object( self.tag_item,title,link,description, pubDate, guid, url)
+        self.dom=mindom.parseString(ET.tostring(self.tag_namespace))
+        self.prettyprint=self.dom.toprettyxml()
+        if save is True:
+            savexml(fileout)
+
+def nodoublelinebreak(string):
+    target_string=['\n\n','\n\t\n\t','\n\t\t\n\t\t','\n\t\t\t\n\t\t\t']#,'\n\t\t\t\t\n\t\t\t\t']
+#     desired_string = ['\n','\n\t','\n\t\t','\n\t\t\t']#,'\n\t\t\t\t']
+    for i in range(0,len(target_string)):
+        while string.find(target_string[i]) >= 0:
+            string = string[:string.find(target_string[i])]+string[string.find(target_string[i])+i+1:]
+    return string
+
+#Modify an rss file existing and add some items
+class rss_modify(rss_object):
+    def __init__(self, title='item_title',link='https://clas12mon.jlab.org/status/decoding/',description='item_description',pubDate=None,guid=None,url=None,save=False, item_add = False, filein = 'in.xml', fileout=None):
+        self.type = "rss_modify"
+        self.tree = ET.parse(filein)
+        self.tag_namespace = self.tree.getroot()
+        self.tag_channel = self.tag_namespace[0]
+        self.filein = filein
+        self.fileout = fileout
+#         self.dom=mindom.parseString(ET.tostring(self.tag_namespace))
+        self.prettyprint=ET.tostring(self.tag_namespace)
+        if item_add is True:
+            self.tag_item = ET.SubElement(self.tag_channel,"item")
+            self.item = rss_object( self.tag_item,title,link,description, pubDate, guid, url)
+            self.add_item(title,link,description,pubDate,guid,url)
+        if fileout is None:
+            self.fileout = self.filein
+        if save is True:
+            self.savexml(self.fileout)
+
+    def savexml(self,fileout=None):
+        if fileout is None:
+            fileout=self.fileout
+        outfile = open(fileout,"w")
+        self.prettyprint = nodoublelinebreak(str(self.prettyprint))
+        if self.prettyprint.find('\n\t\n</rss>')>0:
+            self.prettyprint=self.prettyprint[:self.prettyprint.find('\n\t\n</rss>')]+self.prettyprint[self.prettyprint.find('\n\t\n</rss>')+2:]
+        self.prettyprint= self.prettyprint.replace("&quot;","\"")
+        self.prettyprint=self.prettyprint.replace('&lt;![CDATA[','')
+        self.prettyprint=self.prettyprint.replace(']]&gt;','')
+        self.prettyprint=self.prettyprint.replace("&lt;TABLE", "<![CDATA[<TABLE")
+        self.prettyprint=self.prettyprint.replace("&lt;/TABLE&gt;", "</TABLE>]]>")
+        outfile.write(unescape(self.prettyprint))
+        outfile.close()
+
+    def add_item(self, title='item_title',link='https://clas12mon.jlab.org/status/decoding/',description='item_description',pubDate=None,guid=None,url=None,save=False, fileout=None):
+        self.tag_item = ET.SubElement(self.tag_channel,"item")
+        self.item = rss_object( self.tag_item,title,link,description, pubDate, guid, url)
+        self.dom=mindom.parseString(ET.tostring(self.tag_namespace))
+        self.prettyprint=self.dom.toprettyxml()
+        self.prettyprint = nodoublelinebreak(str(self.prettyprint))
+        if self.prettyprint.find('\n\t\n</rss>')>0:
+            self.prettyprint=self.prettyprint[:self.prettyprint.find('\n\t\n</rss>')]+self.prettyprint[self.prettyprint.find('\n\t\n</rss>')+2:]
+        if fileout is None:
+            fileout=self.fileout
+        if save is True:
+            savexml(fileout)
+
 def json_data(myjsonfile):
   try:
     json_data = json.load(myjsonfile)
   except ValueError, e:
     return False
   return json_data
-
-
-data = json_data(jsonfile)
-jsonfile.close()
-if data is False:
-    print 'The input file is not a proper json configuration. Check the input file.'
-    exit()
-
-# the json file contains square bracket at the beginning and the end, which is unnecessary for this procedure.
-# turn a flag for inserting xml key such as "root" if wanted. (TODO)
-
-def list_to_data(data):
-    dummy=data
-    while type(dummy) is list and len(dummy)==1:
-        if len(dummy)==1:
-            dummy = dummy[0]
-    return dummy
-
-data = list_to_data(data)
-# i=0
-# data = dummy
-# print 'There are %d unneccessary square bracket(s).'%i
-# print 'The default is to ignore these brackets. Turn the flag on for BLAHBLAH(TODO)'
-
-# check the data is restored from json file as dictionary
-# print type(data) is dict
-
-#Initial Setup of essential components for an RSS feed.
-RSS  = ET.Element('rss')
-RSS.set("version","2.0")
-RSS_channel = ET.SubElement(RSS,"channel")
-RSS_title = ET.SubElement(RSS_channel, "title")
-RSS_title.text="Test: converting a json to an rss file"
-RSS_link = ET.SubElement(RSS_channel, "link")
-RSS_link.text="Not sure about a link"
-RSS_description = ET.SubElement(RSS, "description")
-
-
-
-# sort the keys and items in alphabetical order
-for keys, values in sorted(data.items()):
-    if type(values) is list:
-        item = ET.SubElement(RSS_channel,"item")
-        item_title = ET.SubElement(item, "title")
-        item_title.text= keys
-        item_link = ET.SubElement(item, "link")
-        item_link.text = "Not sure about a link"
-        item_description = ET.SubElement(item, "description")
-        for i in range(0,len(values)):
-            if type(list_to_data(values[i].values())) is list:
-                for texts in list_to_data(values[i].values()):
-                    if texts is not unicode :
-                        texts = str(texts)
-                    SubElement2 = ET.SubElement(item,list_to_data(values[i].keys()) )
-                    SubElement2.text= texts
-            elif type(list_to_data(values[i].values())) is not unicode:
-                SubElement2 = ET.SubElement(item,list_to_data(values[i].keys()) )
-                SubElement2.text=str(list_to_data(values[i].values()))
-            else:
-                SubElement2 = ET.SubElement(item,list_to_data(values[i].keys()) )
-                SubElement2.text=list_to_data(values[i].values())
-    else:
-#        SubElement= ET.SubElement(RSS_channel,keys)
-        item= ET.SubElement(RSS_channel,"item")
-        item_title = ET.SubElement(item,"title")
-        item_title.text = keys
-        item_link = ET.SubElement(item, "link")
-        item_link.text = "Not sure about a link"
-        if type(values) is not unicode:
-            values=str(values)
-        item_description = ET.SubElement(item,"description")
-        if keys[-3:]=="_ts":
-            values=time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime(1548882307000/1000.))+'%03d'%(1548882307001%1000)
-        item_description.text=values
-
-
-
-dom=mindom.parseString(ET.tostring(RSS))
-prettyprint=dom.toprettyxml()
-print prettyprint

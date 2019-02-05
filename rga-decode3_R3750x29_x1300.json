@@ -1,0 +1,82 @@
+[
+  {
+    "attempts": 0,
+    "create_ts": 1548817041000,
+    "current_ts": 1548846944000,
+    "jobs": 66583,
+    "suspended": 1,
+    "tags": [
+      {
+        "task": [
+          "decode"
+        ]
+      },
+      {
+        "run": [
+          "003750",
+          "003814",
+          "004013",
+          "004014",
+          "004015",
+          "004018",
+          "004022",
+          "004026",
+          "004030",
+          "004039",
+          "004058",
+          "004059",
+          "004061",
+          "004069",
+          "004078",
+          "004143",
+          "004147",
+          "004148",
+          "004169",
+          "004180",
+          "004184",
+          "004203",
+          "004208",
+          "004209",
+          "004223",
+          "004246",
+          "004252",
+          "004253",
+          "004314"
+        ]
+      },
+      {
+        "coatjava": [
+          "/group/clas12/packages/coatjava-6b.0.0"
+        ]
+      },
+      {
+        "run_group": [
+          "rga"
+        ]
+      },
+      {
+        "workDir": [
+          "/volatile/clas12/rga/production/decoding/6b.0.0"
+        ]
+      },
+      {
+        "mode": [
+          "decode",
+          "merge",
+          "delete",
+          "move"
+        ]
+      },
+      {
+        "outDir": [
+          "/cache/mss/clas12/rg-a/production/decoded/6b.0.0"
+        ]
+      }
+    ],
+    "undispatched": 66583,
+    "update_ts": 1548846869000,
+    "workflow_id": 93296,
+    "workflow_name": "rga-decode3_R3750x29_x1300",
+    "workflow_user": "clas12"
+  }
+]
