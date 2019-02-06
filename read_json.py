@@ -19,13 +19,13 @@ class rss_object:
         self.tag_link.text = link
         self.tag_description = ET.SubElement(self.tag_main,"description")
         self.tag_description.text = unescape(description)
-        if pubDate is not None:
+        if pubDate != None:
             self.tag_pubDate= ET.SubElement(self.tag_main,"pubDate")
             self.tag_pubDate.text = pubDate
-        if guid is not None:
+        if guid != None:
             self.tag_guid= ET.SubElement(self.tag_main,"guid")
             self.tag_guid.text = guid
-        if url is not None:
+        if url != None:
             self.tag_url= ET.SubElement(self.tag_main,"url")
             self.tag_url.text = url
 
@@ -40,13 +40,13 @@ class rss_main(rss_object):
         self.tag_channel = ET.SubElement(self.tag_namespace,"channel")
         #sub objects under channel
         rss_object.__init__(self,self.tag_channel, title,link,description)
-        if fileout is None:
+        if fileout == None:
             self.fileout = fileout
-        if save is True:
+        if save:
             self.savexml(fileout)
 #a simple ftn to write rss file
     def savexml(self,fileout=None):
-        if fileout is None:
+        if fileout == None:
             fileout=self.fileout
         self.dom=mindom.parseString(ET.tostring(self.tag_namespace))
         self.prettyprint=self.dom.toprettyxml()
@@ -61,7 +61,7 @@ class rss_main(rss_object):
         self.item = rss_object( self.tag_item,title,link,description, pubDate, guid, url)
         self.dom=mindom.parseString(ET.tostring(self.tag_namespace))
         self.prettyprint=self.dom.toprettyxml()
-        if save is True:
+        if save:
             savexml(fileout)
 
 def nodoublelinebreak(string):
@@ -83,17 +83,17 @@ class rss_modify(rss_object):
         self.fileout = fileout
 #         self.dom=mindom.parseString(ET.tostring(self.tag_namespace))
         self.prettyprint=ET.tostring(self.tag_namespace)
-        if item_add is True:
+        if item_add:
             self.tag_item = ET.SubElement(self.tag_channel,"item")
             self.item = rss_object( self.tag_item,title,link,description, pubDate, guid, url)
             self.add_item(title,link,description,pubDate,guid,url)
-        if fileout is None:
+        if fileout == None:
             self.fileout = self.filein
-        if save is True:
+        if save:
             self.savexml(self.fileout)
 
     def savexml(self,fileout=None):
-        if fileout is None:
+        if fileout == None:
             fileout=self.fileout
         outfile = open(fileout,"w")
         self.prettyprint = nodoublelinebreak(str(self.prettyprint))
@@ -115,9 +115,9 @@ class rss_modify(rss_object):
         self.prettyprint = nodoublelinebreak(str(self.prettyprint))
         if self.prettyprint.find('\n\t\n</rss>')>0:
             self.prettyprint=self.prettyprint[:self.prettyprint.find('\n\t\n</rss>')]+self.prettyprint[self.prettyprint.find('\n\t\n</rss>')+2:]
-        if fileout is None:
+        if fileout == None:
             fileout=self.fileout
-        if save is True:
+        if save:
             savexml(fileout)
 
 def json_data(myjsonfile):

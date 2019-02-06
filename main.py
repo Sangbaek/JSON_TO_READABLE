@@ -46,7 +46,7 @@ for i in specific_keys:
     dummy= data.get(i)
     if i == 'success':
         if data.get('succeeded'):
-            dummy = '%2.1f'%(data.get('succeeded')/data.get('jobs')) +' %'
+            dummy = '%2.1f'%(100.*data.get('succeeded')/data.get('jobs')) +' %'
         else:
             dummy ='0'
     if dummy == None:
